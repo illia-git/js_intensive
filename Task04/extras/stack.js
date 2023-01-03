@@ -1,21 +1,50 @@
+class Node {
+    constructor(value, next = null) {
+        this.value = value;
+        this.next = next;
+    }
+}
+
 class Stack {
     constructor() {
-        this.items = [];
+        this.top = null;
+        this.bottom = null;
+        this.length = 0;
     }
 
-    push(element) {
-        this.items.push(element);
+    push(value) {
+        const newNode = new Node(value);
+        if (this.isEmpty()) {
+            this.top = newNode;
+            this.bottom = newNode;
+        } else {
+            newNode.next = this.top;
+            this.top = newNode;
+        }
+        this.length += 1;
     }
 
     pop() {
-        return this.items.pop();
+        if (this.isEmpty()) {
+            return null;
+        }
+        const value = this.top.value;
+        this.top = this.top.next;
+        this.length -= 1;
+        if (this.isEmpty()) {
+            this.bottom = null;
+        }
+        return value;
     }
 
     peek() {
-        return this.items[this.items.length - 1];
+        if (this.isEmpty()) {
+            return null;
+        }
+        return this.top.value;
     }
 
     isEmpty() {
-        return this.items.length === 0;
+        return this.length === 0;
     }
 }
